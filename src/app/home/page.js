@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap'
 const page = () => {
     return (
         <div>
-         <Button variant="warning">Home Page </Button>
+         <Button variant="warning" href='/'>Home Page </Button>
         </div>
     )
 }
