@@ -1,7 +1,6 @@
-
 import mongoose, { Document, Schema } from 'mongoose';
 
-export interface IIssue extends Document {
+export interface ITask extends Document {
     title: string;
     description: string;
     status: 'OPEN' | 'IN_PROGRESS' | 'CLOSE';
@@ -9,7 +8,7 @@ export interface IIssue extends Document {
     updatedAt: Date;
 }
 
-const issueSchema = new Schema<IIssue>({
+const taskSchema = new Schema<ITask>({
     title: {
         type: String,
         maxlength: 255,
@@ -34,6 +33,6 @@ const issueSchema = new Schema<IIssue>({
     },
 });
 
-const Issue = mongoose.model<IIssue>('Issue', issueSchema);
+const Task = mongoose.model<ITask>('Task', taskSchema);
 
-export default Issue;
+export default Task;

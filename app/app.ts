@@ -1,7 +1,7 @@
 // app.ts
 
 import express from 'express';
-import { handleGetRequest, handlePostRequest } from './api/routes/route';
+import { handleGetRequest, handlePostRequest } from './api/todos/route';
 
 const app = express();
 
