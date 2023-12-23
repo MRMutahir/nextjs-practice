@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import Task from "../../database"; // Renamed 'Issue' to 'Task'
-import { z } from "zod";
+import { createTaskSchema } from "../../valitationSchema";
 
 // MongoDB connection
 mongoose.connect('mongodb+srv://mutahirkareem820:aG4NUHfz6DkvpnSq@cluster0.zwicjnc.mongodb.net/', {
@@ -9,11 +9,6 @@ mongoose.connect('mongodb+srv://mutahirkareem820:aG4NUHfz6DkvpnSq@cluster0.zwicj
      // useUnifiedTopology: true,
 }).catch(error => {
     console.error('MongoDB connection error:', error);
-});
-
-const createTaskSchema = z.object({ // Renamed 'createIssueSchema' to 'createTaskSchema'
-    title: z.string(),
-    description: z.string()
 });
 
 export async function POST(request: NextRequest) { // Renamed 'POST' to 'createTask'
