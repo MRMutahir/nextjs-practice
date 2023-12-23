@@ -21,7 +21,6 @@ const taskSchema = new Schema<ITask>({
     status: {
         type: String,
         enum: ['OPEN', 'IN_PROGRESS', 'CLOSE'],
-        default: 'OPEN',
     },
     createdAt: {
         type: Date,

@@ -10,6 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { createTaskSchema } from "@/app/valitationSchema";
 import { z } from "zod";
+import ErrorMessage from "@/app/Components/ErrorMessage";
+import Spinner from "@/app/Components/Spinner";
 
 // interface IssueForm {
 //   title: String;
@@ -29,6 +31,7 @@ const NewIssue = () => {
     resolver: zodResolver(createTaskSchema),
   });
   const [errorS, seterrorS] = useState<string | null>(null);
+  const [isSubmiting, setisSubmiting] = useState<string | null>(null);
   // console.log(register("title"), "register>>>>>>>>>");
   console.log(errorS, "errorS");
 
@@ -43,9 +46,11 @@ const NewIssue = () => {
         className="max-w-xl space-y-3"
         onSubmit={handleSubmit(async (data) => {
           try {
+            setisSubmiting(true);
             await axios.post(`/api/todos/`, data);
             router.push("/issues");
           } catch (error) {
+            setisSubmiting(false);
             seterrorS(
               "Sorry, something went wrong. Please try again, or refresh the page."
             );
@@ -53,11 +58,16 @@ const NewIssue = () => {
         })}
       >
         <TextField.Root>
-          {errors.title && <Text color="red" as="p">{errors.title.message}</Text>}
           <TextField.Input
             placeholder="Search the docs…"
             {...register("title")}
           />
+          {/* {errors.title && (
+            <Text color="red" as="p">
+              {errors.title.message}
+            </Text>
+          )} */}
+          <ErrorMessage>{errors.title?.message}</ErrorMessage>
         </TextField.Root>
         <Controller
           name="description"
@@ -66,8 +76,15 @@ const NewIssue = () => {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-        {errors.description && <Text  color="red" as="p">{errors.description.message}</Text>}
-        <Button>Submit New Issue</Button>
+        {/* {errors.description && (
+          <Text color="red" as="p">
+            {errors.description.message}
+          </Text>
+        )} */}
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
+        <Button disabled={isSubmiting}>
+          Submit New Issue {isSubmiting && <Spinner />}
+        </Button>
       </form>
     </div>
   );
