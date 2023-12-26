@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -29,9 +29,9 @@ const Navbar = () => {
           <li key={ele.href}>
             <Link
               className={classNames({
-                'text-zinc-900': ele.href === currentPath,
-                'text-zinc-500': ele.href !== currentPath,
-                'hover:text-zinc-800 transition-colors': true,
+                "text-zinc-900": ele.href === currentPath,
+                "text-zinc-500": ele.href !== currentPath,
+                "hover:text-zinc-800 transition-colors": true,
               })}
               href={ele.href}
             >

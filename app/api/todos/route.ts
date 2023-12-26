@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
         const newTask = new Task({
             title,
             description,
-            status: "OPEN"
+            status: String("OPEN")
         });
 
         // Saving the new task
