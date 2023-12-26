@@ -4,18 +4,28 @@ import { Button, Table } from "@radix-ui/themes";
 import Link from "next/link";
 import Modal from "../Components/Modal";
 
-// Import statements...
+interface Issue {
+  title: string;
+  status: string;
+  createdAt: string;
+  description: string;
+
+  // Add other properties if available in your issue data
+}
+interface ModalProps {
+  issue: null;
+}
 
 const IssuesPage = () => {
-  const [data, setData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [issingleData, setSingleData] = useState([]);
+  const [data, setData] = useState<Issue[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [issingleData, setSingleData] = useState<Issue | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch("http://localhost:3000/api/todos");
-        const redata = await res.json();
+        const redata: Issue[] = await res.json();
         console.log(redata, ">>>>>>>>>>>>>redata");
         setData(redata);
       } catch (error) {
@@ -25,13 +35,6 @@ const IssuesPage = () => {
 
     fetchData();
   }, []);
-  // const showModal = () => {
-  //   setIsModalOpen((prevState) => !prevState);
-  //   const singledata = data.map((ele, index) => {
-  //     return ele.description;
-  //   });
-  //   console.log(singledata, ">>>>>>>>>singledata");
-  // };
 
   return (
     <>
@@ -43,33 +46,17 @@ const IssuesPage = () => {
       </div>
       <div>
         <Table.Root>
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>createdAt</Table.ColumnHeaderCell>
-            </Table.Row>
-          </Table.Header>
-
           <Table.Body>
-            {data.map((issue, index) => (
+            {data.map((issue: Issue, index: number) => (
               <Table.Row key={index} className="cursor-pointer">
                 <Table.RowHeaderCell
                   onClick={() => {
-                    setIsModalOpen((prevState) => !prevState); // Toggling the state
-                    // console.log(index,"index>>>")
-                    // console.log(issue, "index>>>");
+                    setIsModalOpen(true);
                     setSingleData(issue);
-
-                    // const singledata = data.map((ele, index) => {
-                    //   return ele.description;
-                    // });
-                    // console.log(singledata, ">>>>>>>>>singledata");
                   }}
                 >
                   {issue.title}
                 </Table.RowHeaderCell>
-
                 <Table.Cell>{issue.status}</Table.Cell>
                 <Table.Cell>{issue.createdAt}</Table.Cell>
               </Table.Row>
@@ -77,7 +64,8 @@ const IssuesPage = () => {
           </Table.Body>
         </Table.Root>
       </div>
-      {isModalOpen && <Modal issue={issingleData} />}
+      {isModalOpen && <Modal issue ={issingleData} />}
+
     </>
   );
 };

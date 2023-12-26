@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json(tasks);
     } catch (error) {
         console.error('Error fetching tasks:', error);
-        return NextResponse.error('Error fetching tasks', { status: 500 });
+        return NextResponse.json({ error: 'Error fetching tasks' }, { status: 500 });
     }
 }
 
@@ -47,9 +47,9 @@ export async function POST(request: NextRequest) {
         // Saving the new task
         await newTask.save();
 
-        return NextResponse.json({ message: 'Task created successfully' }, { status: 200 }, { task: newTask });
+        return NextResponse.json({ message: 'Task created successfully' }, { status: 200 });
     } catch (error) {
         console.error('Error creating task:', error);
-        return NextResponse.error('Error creating task', { status: 500 });
+        return NextResponse.json({ error: 'Error fetching tasks' }, { status: 500 });
     }
 }

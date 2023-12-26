@@ -13,15 +13,15 @@ import { z } from "zod";
 import ErrorMessage from "@/app/Components/ErrorMessage";
 import Spinner from "@/app/Components/Spinner";
 
-// interface IssueForm {
-//   title: String;
-//   description: String;
-// }
 
 type IssueForm = z.infer<typeof createTaskSchema>;
 
+
 const NewIssue = () => {
   const router = useRouter();
+
+  
+
   const {
     register,
     control,
@@ -31,7 +31,8 @@ const NewIssue = () => {
     resolver: zodResolver(createTaskSchema),
   });
   const [errorS, seterrorS] = useState<string | null>(null);
-  const [isSubmiting, setisSubmiting] = useState<string | null>(null);
+   // const [isSubmiting, setisSubmiting] = useState<string | null>(null);
+  const [isSubmiting, setisSubmiting] = useState<boolean>(false);
   // console.log(register("title"), "register>>>>>>>>>");
   console.log(errorS, "errorS");
 

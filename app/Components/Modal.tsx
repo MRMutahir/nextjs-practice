@@ -1,10 +1,19 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+interface Issue {
+  id: number;
+  title: String;
+  description: String;
+}
 
-export default function Modal({ issue }) {
+interface ModalProps {
+  issue: Issue;
+}
+
+export default function Modal({ issue }: ModalProps) {
   const singleData = issue;
-  console.log(issue, ">>>>>>>>>>>>>>>>>>description");
+  // console.log(issue, ">>>>>>>>>>>>>>>>>>description");
   // console.log(title,">>>>>>>>>>>>>>>>>>description")
   const [open, setOpen] = useState<boolean>(true);
 
