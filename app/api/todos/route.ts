@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-import Task from "../../database"; // Renamed 'Issue' to 'Task'
+import Task from "../../database";
 import { createTaskSchema } from "../../valitationSchema";
 
-// MongoDB connection
 mongoose.connect('mongodb+srv://mutahirkareem820:aG4NUHfz6DkvpnSq@cluster0.zwicjnc.mongodb.net/', {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
+
 }).catch(error => {
     console.error('MongoDB connection error:', error);
 });
@@ -44,7 +42,7 @@ export async function POST(request: NextRequest) {
             status: String("OPEN")
         });
 
-        // Saving the new task
+
         await newTask.save();
 
         return NextResponse.json({ message: 'Task created successfully' }, { status: 200 });
