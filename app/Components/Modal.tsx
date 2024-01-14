@@ -2,13 +2,15 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 interface Issue {
-  id: number;
-  title: String;
-  description: String;
+  id?: string;
+  title: string;
+  status: string;
+  createdAt: string;
+  description: string;
 }
 
 interface ModalProps {
-  issue: Issue;
+  issue?: Issue | null;
 }
 
 export default function Modal({ issue }: ModalProps) {
@@ -54,10 +56,10 @@ export default function Modal({ issue }: ModalProps) {
                   </div> */}
                   <div className="ml-4">
                     <Dialog.Title className="text-base font-semibold text-gray-900">
-                      {singleData.title}
+                      {singleData?.title}
                     </Dialog.Title>
                     <p className="mt-2 text-sm text-gray-500">
-                      {singleData.description}
+                      {singleData?.description}
                     </p>
                   </div>
                 </div>

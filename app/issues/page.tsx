@@ -5,6 +5,7 @@ import Link from "next/link";
 import Modal from "../Components/Modal";
 
 interface Issue {
+  id?: string;
   title: string;
   status: string;
   createdAt: string;
@@ -64,7 +65,7 @@ const IssuesPage = () => {
           </Table.Body>
         </Table.Root>
       </div>
-      {isModalOpen && <Modal issue ={issingleData} />}
+      {isModalOpen && <Modal issue={issingleData} />}
 
     </>
   );
