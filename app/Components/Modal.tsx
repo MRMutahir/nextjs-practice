@@ -52,10 +52,10 @@ export default function Modal({ singledata }: ModalProps) {
                 <div className="flex items-start">
                   <div className="ml-4">
                     <Dialog.Title className="text-base font-semibold text-gray-900">
-                      {/* {singleData?.title} */}
+                      {issue?.title}
                     </Dialog.Title>
                     <p className="mt-2 text-sm text-gray-500">
-                      {/* {singleData?.description} */}
+                      {issue?.description}
                     </p>
                   </div>
                 </div>
