@@ -3,31 +3,27 @@ import React, { useEffect, useState } from "react";
 import { Button, Table } from "@radix-ui/themes";
 import Link from "next/link";
 import Modal from "../Components/Modal";
-
+import { Fascinate } from "next/font/google";
 interface Issue {
   id?: string;
   title: string;
   status: string;
   createdAt: string;
   description: string;
-
   // Add other properties if available in your issue data
-}
-interface ModalProps {
-  issue: null;
 }
 
 const IssuesPage = () => {
   const [data, setData] = useState<Issue[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [issingleData, setSingleData] = useState<Issue | null>(null);
-
+  const [isSingleData, setSingleData] = useState<Issue | null>(null);
+  // console.log(isSingleData, ">>>>>>>>>>>>>>>>>>>>>>>>isSingleData")
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch("http://localhost:3000/api/todos");
         const redata: Issue[] = await res.json();
-        console.log(redata, ">>>>>>>>>>>>>redata");
+        // console.log(redata, ">>>>>>>>>>>>>redata");
         setData(redata);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -36,6 +32,10 @@ const IssuesPage = () => {
 
     fetchData();
   }, []);
+  // let closeModal = () => {
+  //   // console.log("closeModal ok")
+  //   setIsModalOpen(false);
+  // }
 
   return (
     <>
@@ -49,24 +49,38 @@ const IssuesPage = () => {
         <Table.Root>
           <Table.Body>
             {data.map((issue: Issue, index: number) => (
-              <Table.Row key={index} className="cursor-pointer">
-                <Table.RowHeaderCell
-                  onClick={() => {
-                    setIsModalOpen(true);
-                    setSingleData(issue);
-                  }}
-                >
-                  {issue.title}
-                </Table.RowHeaderCell>
-                <Table.Cell>{issue.status}</Table.Cell>
-                <Table.Cell>{issue.createdAt}</Table.Cell>
-              </Table.Row>
+              <>
+                < Table.Row key={index} className="cursor-pointer" >
+                  <Table.RowHeaderCell
+                    onClick={() => {
+                      setSingleData({ issue, index });
+                      setIsModalOpen(true);
+                    }}
+                  >
+                    {issue.title}
+                  </Table.RowHeaderCell>
+                  <Table.Cell>{issue.status}</Table.Cell>
+                  <Table.Cell>{issue.createdAt}</Table.Cell>
+                  <Table.Cell>
+                    <Button size="3" variant="soft">
+                      Edit Task
+                    </Button>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Button color="crimson" variant="soft">
+                      {" "}
+                      Delete Task
+                    </Button>
+                  </Table.Cell>
+                </Table.Row></>
             ))}
           </Table.Body>
         </Table.Root>
-      </div>
-      {isModalOpen && <Modal issue={issingleData} />}
-
+      </div >
+      {
+        isModalOpen && <Modal singleData={isSingleData} />
+      }
+      {/* <Modal issue={isSingleData} /> */}
     </>
   );
 };

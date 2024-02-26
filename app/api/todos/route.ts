@@ -2,13 +2,15 @@ import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import Task from "../../database";
 import { createTaskSchema } from "../../valitationSchema";
-
-mongoose.connect('mongodb+srv://mutahirkareem820:aG4NUHfz6DkvpnSq@cluster0.zwicjnc.mongodb.net/', {
-
+mongoose.connect('mongodb+srv://nextjspractice:rq74Mqfxr3QLFvmA@cluster0.zwicjnc.mongodb.net/', {
+}).then(() => {
+    console.log("MongoDB connected successfully");
 }).catch(error => {
     console.error('MongoDB connection error:', error);
 });
+
 export async function GET(request: NextRequest) {
+    // return NextResponse.json("Api is  run");
     try {
         // Fetch all tasks from the database
         const tasks = await Task.find();
