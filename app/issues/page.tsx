@@ -61,6 +61,17 @@ const IssuesPage = () => {
                 </Table.RowHeaderCell>
                 <Table.Cell>{issue.status}</Table.Cell>
                 <Table.Cell>{issue.createdAt}</Table.Cell>
+                <Table.Cell> <Button color="cyan" variant="soft">
+                  Edit issue
+                </Button>
+                </Table.Cell>
+                <Table.Cell>
+                  <Button color="crimson" variant="soft">
+                    Delete issue
+                  </Button>
+                </Table.Cell>
+
+
               </Table.Row>
             ))}
           </Table.Body>
