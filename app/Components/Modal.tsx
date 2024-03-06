@@ -26,18 +26,12 @@ export default function Modal({ singledata, closeModalFoo }: ModalProps) {
     setOpen(false);
   };
 
-  useEffect(() => {
-    if (open === true) {
-      console.log("Modal opened");
-    }
-  }, []);
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
-        onClose={() => setOpen(false)}
+        onClose={() => (setOpen(false), closeModalFoo())}
       >
         <div className="flex items-center justify-center">
           <Dialog.Panel
@@ -80,7 +74,6 @@ export default function Modal({ singledata, closeModalFoo }: ModalProps) {
                     </button>
                   </div>
                 </div>
-
               </Dialog.Panel>
             </div>
           </Transition.Child>
