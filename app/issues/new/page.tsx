@@ -1,4 +1,5 @@
 "use client";
+
 import { Button, Callout, TextField } from "@radix-ui/themes";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
@@ -17,9 +18,8 @@ type IssueForm = z.infer<typeof createTaskSchema>;
 
 
 const NewIssue = () => {
+
   const router = useRouter();
-
-
 
   const {
     register,
@@ -29,6 +29,7 @@ const NewIssue = () => {
   } = useForm<IssueForm>({
     resolver: zodResolver(createTaskSchema),
   });
+
   const [errorS, seterrorS] = useState<string | null>(null);
   // const [isSubmiting, setisSubmiting] = useState<string | null>(null);
   const [isSubmiting, setisSubmiting] = useState<boolean>(false);
@@ -47,8 +48,8 @@ const NewIssue = () => {
         onSubmit={handleSubmit(async (data) => {
           try {
             setisSubmiting(true);
-            await axios.post(`/api/todos/`, data);
-            router.push("/issues");
+            await axios.post(`/api/todos`, data);
+            // router.push("/issues");
           } catch (error) {
             setisSubmiting(false);
             seterrorS(
