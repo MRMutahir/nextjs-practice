@@ -1,6 +1,8 @@
-import { Fragment, useRef, useState } from "react";
+// Modal.tsx
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+
 interface Issue {
   id?: string;
   title: string;
@@ -10,18 +12,25 @@ interface Issue {
 }
 
 interface ModalProps {
-  issue?: Issue | null;
+  singledata?: Issue | null;
+  closeModalFoo: () => void;
 }
 
-export default function Modal({ singledata }: ModalProps) {
-  const { issue, closeModalFoo } = singledata;
-  console.log(issue, ">>>>>>>>>>>>>>>>>>>>>>")
+export default function Modal({ singledata, closeModalFoo }: ModalProps) {
+  const issue = singledata;
   const [open, setOpen] = useState<boolean>(true);
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
-  let closeBothModal = () => {
-    closeModalFoo()
-    setOpen(false)
-  }
+
+  const closeBothModal = () => {
+    closeModalFoo();
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (open === true) {
+      console.log("Modal opened");
+    }
+  }, []);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -49,26 +58,29 @@ export default function Modal({ singledata }: ModalProps) {
                 as="div"
                 className="bg-white p-4 rounded-lg shadow-xl w-80"
               >
-                <div className="flex items-start">
+                <div className="flex  flex-col justify-between">
                   <div className="ml-4">
                     <Dialog.Title className="text-base font-semibold text-gray-900">
                       {issue?.title}
                     </Dialog.Title>
-                    <p className="mt-2 text-sm text-gray-500">
+                  </div>
+                  <div className="ml-4">
+                    <Dialog.Description className="mt-2 text-sm text-gray-500">
                       {issue?.description}
-                    </p>
+                    </Dialog.Description>
+                  </div>
+                  <div className="mt-4 flex justify-end">
+                    <button
+                      type="button"
+                      className="ml-3 inline-flex justify-center px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      onClick={closeBothModal}
+                      ref={cancelButtonRef}
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
-                <div className="mt-4 flex justify-end">
-                  <button
-                    type="button"
-                    className="ml-3 inline-flex justify-center px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    onClick={closeBothModal}
-                    ref={cancelButtonRef}
-                  >
-                    Cancel
-                  </button>
-                </div>
+
               </Dialog.Panel>
             </div>
           </Transition.Child>

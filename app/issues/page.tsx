@@ -1,4 +1,5 @@
 "use client";
+// IssuesPage.tsx
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "@radix-ui/themes";
 import Link from "next/link";
@@ -11,33 +12,33 @@ interface Issue {
   createdAt: string;
   description: string;
 }
-interface ModalProps {
-  issue: null;
-}
 
 const IssuesPage = () => {
   const [data, setData] = useState<Issue[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [issingleData, setSingleData] = useState<Issue | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch("http://localhost:3000/api/todos");
         const redata: Issue[] = await res.json();
-        console.log(redata, ">>>>>>>>>>>>>redata");
         setData(redata);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
 
-  let closeModalFoo = () => {
+  const closeModalFoo = () => {
     setIsModalOpen(false);
-    console.log("SALAM  closeModal")
-  }
+  };
+
+  const openModalFoo = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <div className="flex justify-between items-center pb-5">
@@ -54,30 +55,29 @@ const IssuesPage = () => {
                 <Table.RowHeaderCell
                   onClick={() => {
                     setIsModalOpen(true);
-                    setSingleData({ issue, closeModalFoo });
+                    setSingleData(issue);
                   }}
                 >
                   {issue.title}
                 </Table.RowHeaderCell>
                 <Table.Cell>{issue.status}</Table.Cell>
                 <Table.Cell>{issue.createdAt}</Table.Cell>
-                <Table.Cell> <Button color="cyan" variant="soft">
-                  Edit issue
-                </Button>
+                <Table.Cell>
+                  <Button color="cyan" variant="soft">
+                    Edit issue
+                  </Button>
                 </Table.Cell>
                 <Table.Cell>
                   <Button color="crimson" variant="soft">
                     Delete issue
                   </Button>
                 </Table.Cell>
-
-
               </Table.Row>
             ))}
           </Table.Body>
         </Table.Root>
       </div>
-      {isModalOpen && <Modal singledata={issingleData} />}
+      {isModalOpen && <Modal singledata={issingleData} closeModalFoo={closeModalFoo} />}
     </>
   );
 };
